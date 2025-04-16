@@ -1,13 +1,11 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 
-import { signUp } from '@/actions/sign-up'
-import { handleServerActionError } from '@/lib/error-handling'
+import { handleServerActionError, toastServerError } from '@/lib/error-handling'
 import { logInSchemas, LogInValues } from '@/lib/schemas'
 import { FieldError } from '@/components/field-error'
 import { logIn } from '@/actions/log-in'
@@ -18,7 +16,7 @@ export const LogInForm = () => {
     mutationFn: async (values: LogInValues) => {
       handleServerActionError(await logIn(values))
     },
-    onError: (error) => toast.error(error.message),
+    onError: toastServerError,
   })
 
   const {
